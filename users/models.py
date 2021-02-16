@@ -1,9 +1,17 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django_countries.fields import CountryField
+
 
 # Create your models here.
-class User(models.Model):
+class User(AbstractUser):
+    
+    KOR = "Korean"
+    ENG = "English"
 
+    LANGUGAGE_CHOICES = (
+        (KOR, "Korean"),
+        (ENG, "English"),
+    )
     MOVIE = "movie"
     BOOK = "books"
 
@@ -20,9 +28,9 @@ class User(models.Model):
         (FEMALE, "female"),
     )
 
-    user_name = models.CharField(max_length=30, blank=True)
-    favour_book = models.CharField(max_length=30)
-    favour_movie = models.CharField(max_length=30)
-    language = CountryField()
-    preference = models.CharField(max_length=20, choices=PREFERENCE_CHOICES)
-    bio = models.CharField(max_length=20, choices=GENDER_CHOICES)
+    favour_book = models.CharField(max_length=30, blank=True)
+    favour_movie = models.CharField(max_length=30, blank=True)
+    language = models.CharField(max_length=20, choices=LANGUGAGE_CHOICES, blank=True)
+    preference = models.CharField(max_length=20, choices=PREFERENCE_CHOICES, blank=True)
+    bio = models.TextField(default="")
+    
